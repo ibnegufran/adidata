@@ -7,7 +7,7 @@ const DataRouter=require("./router/DataRouter")
 const app =express();
 
 app.use(cors({
-    origin: "https://adidata.netlify.app/", 
+    origin: "https://adidata.netlify.app", 
     credentials: true,
   }));
 app.use(express.json())
