@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html{
+  overflow-x: hidden;
+}
+.form{
+  display: grid;
+  grid-template-columns: repeat(2,minmax(150px,1fr));
+  gap: 30px;
+  padding: 40px 0 ;
+}
+
+.boxes{
+  display: grid;
+  grid-template-columns: repeat(2,minmax(200px,1fr));
+  gap: 30px;
+ 
+}
+
+@media (max-width:765px){
+  .form{
+    display: grid;
+    grid-template-columns: repeat(1,minmax(200px,1fr));
+    gap: 30px;
+    padding: 40px 0 ;
+  } 
+  
+.boxes{
+  display: grid;
+  grid-template-columns: repeat(1,minmax(200px,1fr));
+  gap: 30px;
+ 
+}
+}
