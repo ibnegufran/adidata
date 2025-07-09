@@ -6,6 +6,9 @@ if(token){
     axios.defaults.headers.common['Authorization']=token;
 }
 
-axios.defaults.baseURL='http://localhost:5000/api/v1/';
+// axios.defaults.baseURL='http://localhost:5000/api/v1/';
+
+axios.defaults.baseURL='adidata-production.up.railway.app/api/v1/';
+
 
 export default axios;
