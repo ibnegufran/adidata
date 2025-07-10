@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast';
 import axios from '/src/axiosInstance.js'
+import { UserContext } from '../context';
 
 const Signin = () => {
     const navigate=useNavigate();
-
+const {user,setUser}=useContext(UserContext);
     const submitHandler=async(e)=>{
 e.preventDefault();
 const formData=new FormData(e.target);
@@ -18,7 +19,9 @@ console.log(data)
     
         toast.success("Signin Successfully");
        localStorage.setItem('token',data.token);
-       localStorage.setItem('user',JSON.stringify(data.isEmail))
+     const storedUser=  localStorage.setItem('user',JSON.stringify(data.isEmail));
+     setUser(storedUser);
+     console.log("signin",user)
         navigate('/')
     
     

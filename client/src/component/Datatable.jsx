@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from '/src/axiosInstance'
-import { ModalContext } from '../context';
+import { ModalContext, UserContext } from '../context';
 import DataTable from 'react-data-table-component';
 import { Trash } from 'lucide-react';
 import { toast } from 'react-hot-toast';
@@ -40,6 +40,8 @@ const customStyles = {
 
 const DatatableCompo = () => {
 const [patientData,setPatientData]=useState([]);
+const {user,setUser}=useContext(UserContext);
+
 const {open,setOpen}=useContext(ModalContext);
 const [search,setSearch]=useState();
 const [filteredData,setFilteredData]=useState([])
@@ -62,7 +64,7 @@ try {
     const data=await axios.get('/data/get');
     console.log(data.data)
     setPatientData(data.data);
-    setFilteredData(data.data)
+    setFilteredData(data.data);
 } catch (err) {
     console.log(err)
 }
@@ -73,7 +75,7 @@ try {
 useEffect(()=>{
     fetchData()
     console.log("under",patientData.length)
-},[open]);
+},[open,user]);
 
 useEffect(()=>{
 const result= patientData.filter((data)=>{
@@ -114,7 +116,7 @@ const columnsData=[
         selector: row => <button className=' text-red-500  text-md p-2 bg-gray-100 rounded-full' onClick={()=>deleteData(row._id)}><Trash size={20}/></button>,
       },
 ];
-
+console.log("dt",user)
   return (
     <>
      <div className="add-header w-full flex justify-between md:flex-row flex-col-reverse my-4 items-center ">

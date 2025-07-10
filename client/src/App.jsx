@@ -5,11 +5,12 @@ import Navbar from './component/Navbar';
 import Signup from './component/signup';
 import Signin from './component/signin';
 import { Toaster } from 'react-hot-toast';
-import { EditableContext, FormContext, ModalContext } from './context';
+import { EditableContext, FormContext, ModalContext, UserContext } from './context';
 import ProtectedRoute from './component/protectedRoute';
 import Patientpage from './component/Patientpage';
 const App = () => {
   const [open, setOpen] = useState(false);
+  const [userData,setUserData]=useState(null)
   const [formData,setFormData]=useState({
     name: '',
     gender: '',
@@ -27,6 +28,7 @@ const {id}=useParams();
   return (
 
     <div>
+      <UserContext.Provider value={{userData,setUserData}}>
       <EditableContext.Provider value={{editable,setEditable}}>
       <FormContext.Provider value={{formData,setFormData}}>
       <ModalContext.Provider value={{ open, setOpen }}>
@@ -55,6 +57,7 @@ const {id}=useParams();
       </ModalContext.Provider>
       </FormContext.Provider>
       </EditableContext.Provider>
+      </UserContext.Provider>
     </div>
   );
 }
