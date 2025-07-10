@@ -13,11 +13,11 @@ app.use(cors({
 app.use(express.json())
 
 app.get('/',(req,res)=>{
-    res.send('server is running')
+    res.send('server is running on railway')
 })
 
 app.use('/api/v1/user',userRouter);
-app.use('/api/v1/data',DataRouter)
+app.use('/api/v1/data',DataRouter)  
 
 
 
