@@ -8,7 +8,7 @@ if(token){
 
 // axios.defaults.baseURL='http://localhost:5000/api/v1/';
 
-axios.defaults.baseURL='https://adidata-production.up.railway.app/api/v1/';
+axios.defaults.baseURL='https://adidata.onrender.com/api/v1/';
 
 
 export default axios;
