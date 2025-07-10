@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate} from 'react-router-dom';
 
 const Navbar = () => {
-  const [userData,setUserData]=useState({})
+
   const navigate=useNavigate();
   const [show,setShow]=useState(false);
   const user=JSON.parse(localStorage.getItem('user'));
