@@ -5,7 +5,6 @@ require('dotenv').config();
 const userRouter=require('./router/userRouter');
 const DataRouter=require("./router/DataRouter")
 const app =express();
-const cors = require('cors');
 
 app.use(cors({
   origin: "https://adidata.netlify.app", // your Netlify URL without trailing slash
