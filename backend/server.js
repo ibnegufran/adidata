@@ -1,10 +1,10 @@
 const express=require('express')
 const mongoose=require('mongoose');
-const cors=require('cors')
-require('dotenv').config();
 const userRouter=require('./router/userRouter');
 const DataRouter=require("./router/DataRouter")
 const app =express();
+const cors=require('cors')
+require('dotenv').config();
 
 app.use(cors({
   origin: "https://adidata.netlify.app", // your Netlify URL without trailing slash
