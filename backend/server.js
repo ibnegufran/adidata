@@ -20,6 +20,9 @@ app.use(express.json())
 app.get('/',(req,res)=>{
     res.send('server is running on railway')
 })
+app.get('/ping', (req, res) => {
+    res.status(200).send("Server is awake!");
+  });
 
 app.use('/api/v1/user',userRouter);
 app.use('/api/v1/data',DataRouter)  
