@@ -38,7 +38,7 @@ const {id}=useParams();
 
         <BrowserRouter>
           <Toaster position="top-right" />
-          {userData && <Navbar />}
+          {userData?.name && <Navbar />}
           
           <Routes>
             <Route path='/signup' element={<Signup />} />
