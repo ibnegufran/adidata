@@ -13,7 +13,7 @@ const style={
   }
   
   return (
-    <div><div className="h-[90vh] flex justify-center items-center bg-gray-200 opacity-5">
+    <div><div className="h-[100vh] flex justify-center items-center ">
     <ClipLoader
     color="#3B82F6"
     loading={loading}

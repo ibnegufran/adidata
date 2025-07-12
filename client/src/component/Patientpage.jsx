@@ -2,14 +2,16 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from '/src/axiosInstance'
 import { Pencil } from 'lucide-react';
-import { EditableContext, FormContext, ModalContext } from '../context';
+import { EditableContext, FormContext, LoaderContext, ModalContext } from '../context';
 import ModalComponent from './Form';
+import Loader from './Loader';
 const Patientpage = () => {
     const {id}=useParams();
 const {open,setOpen}=useContext(ModalContext);
 const {editable,setEditable}=useContext(EditableContext);
 const {formData,setFormData}=useContext(FormContext);
 
+const {loading,setLoading}=useContext(LoaderContext);
 
 
     const [singlePatientData,setSinglePatientData]=useState([]);
@@ -38,13 +40,17 @@ setFormData({
     }
 
     const getDataById=async()=>{
+        setLoading(true);
         try {
             const {data}=await axios.get(`/data/getById/${id}`)
             setSinglePatientData(data);
             console.log(data)
         } catch (error) {
             console.log(error)
+        } finally{
+            setLoading(false);
         }
+        
     }
     
     useEffect(()=>{
@@ -52,6 +58,8 @@ setFormData({
     },[open])
   return (
     <div>
+        {loading ? (<Loader />) : (
+
 <div className="container md:w-[65vw] mx-auto py-8 bg-gray-50 px-6 my-4">
     <div className="header flex flex-col md:flex-row md:items-center md:gap-8 w-full justify-between my-4">
         <div className="flex items-center gap-8">
@@ -95,6 +103,8 @@ setFormData({
     
 </div>
 </div>
+        )}
+
     
 
 <ModalComponent />

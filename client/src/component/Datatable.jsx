@@ -5,6 +5,7 @@ import DataTable from 'react-data-table-component';
 import { Trash } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import Loader from './Loader';
 
 
 
@@ -41,6 +42,7 @@ const customStyles = {
 const DatatableCompo = () => {
 const [patientData,setPatientData]=useState([]);
 const {userData,setUserData}=useContext(UserContext);
+const {loading,setLoading}=useContext(LoaderContext);
 
 const {open,setOpen}=useContext(ModalContext);
 const [search,setSearch]=useState();
@@ -59,25 +61,27 @@ const deleteData=async(id)=>{
         console.log(error)
     }
 }
-const fetchData=async()=>{
-   
-try {
-    const data=await axios.post('/data/get',{userId:userData._id});
 
+useEffect(() => {
+  const storedUser = JSON.parse(localStorage.getItem("user")); // Or "techUser"
+  setUserData(storedUser);
+}, []); // ✅ Step
+const fetchData=async()=>{
+   setLoading(true)
+try {
+    
+    const data=await axios.post('/data/get',{userId:userData._id});
+   
     console.log(userData._id)
     setFilteredData(data.data);
     setPatientData(data.data);
 } catch (err) {
     console.log(err)
 }
+setLoading(false)
 }
 
 // console.log(patientData.length)
-
-useEffect(() => {
-  const storedUser = JSON.parse(localStorage.getItem("user")); // Or "techUser"
-  setUserData(storedUser);
-}, []); // ✅ Step 2
 
 
 
@@ -136,19 +140,22 @@ console.log("dt",userData)
 
         <button className='bg-blue-500 text-white py-0 rounded-md px-8 font-bold inline-block h-[7vh] w-1/2   md:w-auto' onClick={()=>setOpen(true)}>Add Data</button>
       </div>
-   <DataTable
-    className='w-full md:w-[80vw]'
-   columns={columnsData} 
-   data={filteredData}
-   pagination
-  //  fixedHeader
-   highlightOnHover
-   customStyles={customStyles}
-  //  subHeader
-  //  subHeaderComponent={<input type='text' placeholder='Search Patients By Name' className='w-[50%] border border-gray-500 px-2 py-2 text-md outline-none my-4' />}
-  //  subHeaderAlign='left'
-  
-   />
+      {loading ? (<Loader />) : (
+        <DataTable
+        className='w-full md:w-[80vw]'
+       columns={columnsData} 
+       data={filteredData}
+       pagination
+      //  fixedHeader
+       highlightOnHover
+       customStyles={customStyles}
+      //  subHeader
+      //  subHeaderComponent={<input type='text' placeholder='Search Patients By Name' className='w-[50%] border border-gray-500 px-2 py-2 text-md outline-none my-4' />}
+      //  subHeaderAlign='left'
+      
+       />
+      )}
+   
 
 </>
   )

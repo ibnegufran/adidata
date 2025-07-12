@@ -43,7 +43,7 @@ const Signup = () => {
         <div>
             {loading ? (<Loader />) : (
                  <div className="signup min-h-[90vh] flex justify-center items-center" >
-                 <div className="md:w-[40vw] py-12 rounded-md px-8 flex flex-col gap-4 items-center border border-gray-100">
+                 <div className="md:w-[40vw] shadow-lg w-[90vw] py-12 rounded-md px-4 flex flex-col gap-4 items-center border border-gray-100">
                      <h1 className='text-[2rem] font-bold'>Signup</h1>
                      <form action="" className='w-full flex flex-col gap-6' onSubmit={submitHandler}>
  
