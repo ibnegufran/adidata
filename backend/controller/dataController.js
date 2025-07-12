@@ -23,7 +23,8 @@ res.status(401).send({
 
 const getDataController= async (req, res) => {
     try {
-const data=await DataModel.find({userId:req.user.userId});
+        const {userId}=req.body;
+const data=await DataModel.find({userId});
 console.log(data);
 console.log(req.user);
 

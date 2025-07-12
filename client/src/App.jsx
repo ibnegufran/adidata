@@ -5,12 +5,12 @@ import Navbar from './component/Navbar';
 import Signup from './component/signup';
 import Signin from './component/signin';
 import { Toaster } from 'react-hot-toast';
-import { EditableContext, FormContext, ModalContext, UserContext } from './context';
+import { EditableContext, FormContext, LoaderContext, ModalContext, UserContext } from './context';
 import ProtectedRoute from './component/protectedRoute';
 import Patientpage from './component/Patientpage';
 const App = () => {
   const [open, setOpen] = useState(false);
-  const [userData,setUserData]=useState(null)
+  const [userData,setUserData]=useState({})
   const [formData,setFormData]=useState({
     name: '',
     gender: '',
@@ -24,10 +24,12 @@ const App = () => {
     date: ''
   })
   const [editable,setEditable]=useState(false);
+  const [loading,setLoading]=useState(false);
 const {id}=useParams();
   return (
 
     <div>
+      <LoaderContext.Provider value={{loading,setLoading}}>
       <UserContext.Provider value={{userData,setUserData}}>
       <EditableContext.Provider value={{editable,setEditable}}>
       <FormContext.Provider value={{formData,setFormData}}>
@@ -36,7 +38,8 @@ const {id}=useParams();
 
         <BrowserRouter>
           <Toaster position="top-right" />
-          <Navbar />
+          {userData && <Navbar />}
+          
           <Routes>
             <Route path='/signup' element={<Signup />} />
             <Route path='/signin' element={<Signin />} />
@@ -58,6 +61,7 @@ const {id}=useParams();
       </FormContext.Provider>
       </EditableContext.Provider>
       </UserContext.Provider>
+      </LoaderContext.Provider>
     </div>
   );
 }

@@ -1,14 +1,15 @@
 import axios from 'axios';
 
-const token=localStorage.getItem('token');
+const instance = axios.create({
+  baseURL: 'https://adidata.onrender.com/api/v1/', // ✅ use deployed URL
+  // baseURL: 'http://localhost:5000/api/v1/', // ✅ use deployed URL
 
-if(token){
-    axios.defaults.headers.common['Authorization']=token;
+});
+
+// Set token from localStorage if available (runs once on import)
+const token = localStorage.getItem("token");
+if (token) {
+  instance.defaults.headers.common['Authorization'] = token;
 }
 
-axios.defaults.baseURL='http://localhost:5000/api/v1/';
-
-// axios.defaults.baseURL='https://adidata.onrender.com/api/v1/';
-
-
-export default axios;
+export default instance;

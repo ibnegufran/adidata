@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from '/src/axiosInstance'
-import { ModalContext, UserContext } from '../context';
+import { LoaderContext, ModalContext, UserContext } from '../context';
 import DataTable from 'react-data-table-component';
 import { Trash } from 'lucide-react';
 import { toast } from 'react-hot-toast';
@@ -40,17 +40,18 @@ const customStyles = {
 
 const DatatableCompo = () => {
 const [patientData,setPatientData]=useState([]);
-const {user,setUser}=useContext(UserContext);
+const {userData,setUserData}=useContext(UserContext);
 
 const {open,setOpen}=useContext(ModalContext);
 const [search,setSearch]=useState();
-const [filteredData,setFilteredData]=useState([])
+const [filteredData,setFilteredData]=useState([]);
+console.log("fd",filteredData)
 const deleteData=async(id)=>{
     try {
         console.log(id)
         const deleteRow=await axios.delete(`/data/delete/${id}`);
         fetchData();
-        console.log(deleteRow)
+        // console.log(deleteRow)
         toast.success(deleteRow.data.message);
        
     } catch (error) {
@@ -61,10 +62,11 @@ const deleteData=async(id)=>{
 const fetchData=async()=>{
    
 try {
-    const data=await axios.get('/data/get');
-    console.log(data.data)
-    setPatientData(data.data);
+    const data=await axios.post('/data/get',{userId:userData._id});
+
+    console.log(userData._id)
     setFilteredData(data.data);
+    setPatientData(data.data);
 } catch (err) {
     console.log(err)
 }
@@ -72,17 +74,26 @@ try {
 
 // console.log(patientData.length)
 
+useEffect(() => {
+  const storedUser = JSON.parse(localStorage.getItem("user")); // Or "techUser"
+  setUserData(storedUser);
+}, []); // ✅ Step 2
+
+
+
+
+
 useEffect(()=>{
     fetchData()
-    console.log("under",patientData.length)
-},[open,user]);
+   
+},[userData,open]);
 
 useEffect(()=>{
 const result= patientData.filter((data)=>{
   return data.name.toLowerCase().match(search.toLowerCase());
 })
 setFilteredData(result);
-},[search])
+},[search,userData])
 
 const columnsData=[
     {
@@ -116,7 +127,7 @@ const columnsData=[
         selector: row => <button className=' text-red-500  text-md p-2 bg-gray-100 rounded-full' onClick={()=>deleteData(row._id)}><Trash size={20}/></button>,
       },
 ];
-console.log("dt",user)
+console.log("dt",userData)
   return (
     <>
      <div className="add-header w-full flex justify-between md:flex-row flex-col-reverse my-4 items-center ">

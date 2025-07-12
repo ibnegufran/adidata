@@ -1,12 +1,16 @@
+import axios from 'axios';
 import {  User } from 'lucide-react';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate} from 'react-router-dom';
+import { UserContext } from '../context';
 
 const Navbar = () => {
+  const {userData,setUserData}=useContext(UserContext);
 
   const navigate=useNavigate();
   const [show,setShow]=useState(false);
   const user=JSON.parse(localStorage.getItem('user'));
+
 
   function getUser(){
 
@@ -15,6 +19,9 @@ const Navbar = () => {
 
   const logoutHandler=()=>{
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    delete axios.defaults.headers.common['Authorization'];
+    setUserData(null);
     navigate('/signin')
   }
 
