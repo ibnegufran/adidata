@@ -7,8 +7,8 @@ const cors=require('cors')
 require('dotenv').config();
 
 app.use(cors({
-    origin:" http://localhost:5173",
-//   origin: "https://adidata.netlify.app", // your Netlify URL without trailing slash
+    // origin:" http://localhost:5173",
+  origin: "https://adidata.netlify.app", // your Netlify URL without trailing slash
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']

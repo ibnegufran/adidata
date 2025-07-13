@@ -2,8 +2,8 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  // baseURL: 'https://adidata.onrender.com/api/v1/', // Use your deployed URL when pushing to production
-  baseURL: 'http://localhost:5000/api/v1/', // Your local development URL
+  baseURL: 'https://adidata.onrender.com/api/v1/', // Use your deployed URL when pushing to production
+  // baseURL: 'http://localhost:5000/api/v1/', // Your local development URL
   headers: {
     'Content-Type': 'application/json', // Ensure content type is set
   },
