@@ -64,7 +64,7 @@ setFormData({
     <div className="header flex flex-col md:flex-row md:items-center md:gap-8 w-full justify-between my-4">
         <div className="flex items-center gap-8">
     {/* <p className='text-[5rem]'>{singlePatientData.gender === 'Male' ? '👨' : singlePatientData.gender === 'Female' ? '👩' : '👤'}</p> */}
-    {singlePatientData.gender === 'Male'? <img src='/images/man2.png' className='h-[20vh]'/> : <img src='../images/female.png' className='h-[20vh]'/>}
+    {singlePatientData.gender === 'Male'? <img src='../images/man2.png' className='h-[20vh]'/> : <img src='../images/female.png' className='h-[20vh]'/>}
     <div className="data">
      <p className='text-2xl font-bold text-blue-500'>{singlePatientData.name}</p>
      <p className='text-lg  text-blue-500'>{singlePatientData.gender}</p>
