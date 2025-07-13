@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Front from './component/front';
 import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
 import Navbar from './component/Navbar';
@@ -26,6 +26,10 @@ const App = () => {
   const [editable,setEditable]=useState(false);
   const [loading,setLoading]=useState(false);
 const {id}=useParams();
+useEffect(() => {
+  const storedUser = JSON.parse(localStorage.getItem("user")); // Or "techUser"
+  setUserData(storedUser);
+}, []); // ✅ Step
   return (
 
     <div>

@@ -1,56 +1,56 @@
-const jwt=require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
+const requireSignIn = (req, res, next) => {
+    try {
+        // 1. Get the full Authorization header
+        const authHeader = req.headers.authorization;
 
-const requireSignIn=(req,res,next)=>{
-try {
-    const token =req.headers.authorization;
+        // 2. Check if the header exists
+        if (!authHeader) {
+            return res.status(401).send({
+                message: "No token provided: Authorization header missing."
+            });
+        }
 
-    if(!token){
-        return req.status(401).send({
-            message:"no token provided"
-        })
+        // 3. Extract the token by splitting the "Bearer " prefix
+        // It should be in the format: "Bearer <YOUR_TOKEN>"
+        const token = authHeader.split(' ')[1]; 
+
+        // 4. Check if the token was successfully extracted
+        if (!token) {
+            return res.status(401).send({
+                message: "Invalid token format: Token not found after 'Bearer'."
+            });
+        }
+
+        // 5. Verify the token using your secret key
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        
+        // 6. Attach the decoded user information to req.user
+        req.user = decoded;
+        
+        // 7. Proceed to the next middleware or route handler
+        next();
+    } catch (error) {
+        // Handle specific JWT errors for more informative messages
+        console.error("Authentication Error:", error); // Log the actual error for debugging
+
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).send({
+                message: "Token expired, please log in again."
+            });
+        }
+        if (error.name === 'JsonWebTokenError') {
+            return res.status(401).send({
+                message: "Invalid token: Authentication failed."
+            });
+        }
+        
+        // Generic error for other issues
+        res.status(401).send({
+            message: "Authentication failed due to an unexpected error."
+        });
     }
-    const decoded=jwt.verify(token,process.env.JWT_SECRET);
-    req.user=decoded;
+};
 
-
-//     📌 1. const decoded = jwt.verify(token, process.env.JWT_SECRET);
-// ✅ Kaam:
-// Ye JWT token ko verify karta hai using your secret key.
-
-// Agar token valid hai, to wo token ke andar ka data (userId, email, etc.) return karta hai.
-
-// Agar token fake ya expired ho to error throw karta hai.
-
-// 🔍 Example:
-// js
-// Copy
-// Edit
-// const token = "eyJhbGciOiJIUzI1NiIsInR...";
-// const decoded = jwt.verify(token, "mySecret123");
-// console.log(decoded);
-// // Output: { userId: '6482c...', email: 'abc@gmail.com', iat: ..., exp: ... }
-// 📌 2. req.user = decoded;
-// ✅ Kaam:
-// Ye decoded user info ko request object (req) me attach karta hai.
-
-// Taaki aage ke route handlers me tum directly req.user ka use kar sako.
-
-// 🔍 Use Case:
-// js
-// Copy
-// Edit
-// router.get("/dashboard", requireSignIn, (req, res) => {
-//   res.send(`Welcome, your email is ${req.user.email}`);
-// });
-// Yani req.user me ab poora user data available hai — bina dobara database query ke.
-    
-    next();
-} catch (error) {
-    res.status(401).send({
-        message:"invalid or expired token"
-    })
-}
-}
-
-module.exports=requireSignIn;
+module.exports = requireSignIn;

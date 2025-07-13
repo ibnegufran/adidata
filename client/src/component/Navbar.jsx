@@ -21,7 +21,7 @@ const Navbar = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     delete axios.defaults.headers.common['Authorization'];
-    setUserData(null);
+    setUserData({});
     navigate('/signin')
   }
 

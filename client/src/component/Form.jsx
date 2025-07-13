@@ -9,16 +9,16 @@ const ModalComponent = () => {
   const { open, setOpen } = useContext(ModalContext);
   const { editable, setEditable } = useContext(EditableContext);
   const { id } = useParams();
-  console.log(id)
+  // console.log(id)
   const { formData, setFormData } = useContext(FormContext);
   const {loading,setLoading}=useContext(LoaderContext);
 
   // const [entries,setEntries]=useState([]);
-  console.log(formData)
+  // console.log(formData)
   const user = localStorage.getItem('user');
   JSON.parse(user)
   const userObject = JSON.parse(user);
-  console.log(userObject)
+  // console.log(userObject)
   const customStyles = {
     content: {
       top: '50%',
@@ -36,12 +36,12 @@ const ModalComponent = () => {
 
 
     // const obj=Object.fromEntries(formData);
-    // console.log(obj)
+    console.log(obj)
     const finalData = {
       ...formData,
       userId: userObject._id,
     }
-    console.log(finalData);
+    // console.log(finalData);
     try {
       const data = await axios.post('/data/add', finalData);
       toast.success("New Data Added Successfully");

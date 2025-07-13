@@ -5,7 +5,7 @@ const router=express.Router();
 
 router.post('/add',requireSignIn,addDataController);
 
-router.post('/get',requireSignIn,getDataController);
+router.get('/get',requireSignIn,getDataController);
 router.get('/getById/:id',requireSignIn,getByIdDataController);
 
 

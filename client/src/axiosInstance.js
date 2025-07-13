@@ -1,15 +1,28 @@
+// src/axiosInstance.js
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://adidata.onrender.com/api/v1/', // ✅ use deployed URL
-  // baseURL: 'http://localhost:5000/api/v1/', // ✅ use deployed URL
-
+  // baseURL: 'https://adidata.onrender.com/api/v1/', // Use your deployed URL when pushing to production
+  baseURL: 'http://localhost:5000/api/v1/', // Your local development URL
+  headers: {
+    'Content-Type': 'application/json', // Ensure content type is set
+  },
 });
 
-// Set token from localStorage if available (runs once on import)
-const token = localStorage.getItem("token");
-if (token) {
-  instance.defaults.headers.common['Authorization'] = token;
-}
+// Add a request interceptor
+instance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Attach the token with 'Bearer ' prefix to every outgoing request
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
 
 export default instance;

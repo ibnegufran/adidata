@@ -23,15 +23,23 @@ res.status(401).send({
 
 const getDataController= async (req, res) => {
     try {
-        const {userId}=req.body;
+        // const {userId}=req.body;
+        console.log("Full req.user object:", req.user); // See the structure of req.user
+        const userId=req.user.userId;
+        console.log("Authenticated userId:", userId); // Confirm the ID is present
+
+
 const data=await DataModel.find({userId});
 console.log(data);
 console.log(req.user);
-
+ 
 res.status(200).json(data);
     } catch (error) {
+        console.log(error.message)
 res.status(500).send({
     message:"failed to fetch data",
+    error:error.message
+   
     
 })
     }

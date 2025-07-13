@@ -16,10 +16,10 @@ const Signup = () => {
         const formData = new FormData(e.target);
         const obj = Object.fromEntries(formData.entries());
         const { name, email, password } = obj;
-        console.log(name, email, password);
+        // console.log(name, email, password);
         try {
             const { data } = await axios.post('/user/signup', obj);
-            console.log(data.success)
+            // console.log(data.success)
             if (data.success) {
                 toast.success(data.message);
                 navigate('/signin')
