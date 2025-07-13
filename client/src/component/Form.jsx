@@ -36,7 +36,7 @@ const ModalComponent = () => {
 
 
     // const obj=Object.fromEntries(formData);
-    console.log(obj)
+    // console.log(obj)
     const finalData = {
       ...formData,
       userId: userObject._id,
